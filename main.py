@@ -36,4 +36,4 @@ def guess_cardinal_num():
 
 
 if __name__ == '__main__':
-    main()
+    guess_cardinal_num()
