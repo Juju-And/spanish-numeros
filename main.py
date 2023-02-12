@@ -1,39 +1,23 @@
-from random import randint
-
-import gtts
-from playsound import playsound
-from num2words import num2words
+from cardinal import guess_cardinal_num
+import argparse
 
 
-def guess_cardinal_num():
-    # initial number
-    random_num = randint(1, 100)
-    num_text = num2words(random_num, lang='es')
+def main(min=0, max=100):
+    argParser = argparse.ArgumentParser()
+    argParser.add_argument("-c", "--cardinals", action='store_true', help="Exercise cardinal numbers")
+    argParser.add_argument("-cs", "--minimal", action='store_true', help="Lowest value")
+    argParser.add_argument("-ce", "--maximal", action='store_true', help="Highest value")
 
-    tts = gtts.gTTS(str(random_num), lang="es")
-    tts.save("num.mp3")
-    playsound("num.mp3")
-    print(num_text)
+    args = argParser.parse_args()
 
-    while True:
-        answer_number = input("Enter correct number: ")
-        if int(answer_number) == random_num:
-            print(f'Correct! {num_text} is {random_num}')
-
-            # generate a new number
-            random_num = randint(1, 100)
-            num_text = num2words(random_num, lang='es')
-            tts = gtts.gTTS(str(random_num), lang="es")
-            tts.save("num.mp3")
-            playsound("num.mp3")
-            print(num_text)
-
-        elif int(answer_number) != random_num:
-            print(f'Not correct! {num_text} is not {answer_number}, try again!')
-            playsound("num.mp3")
-        elif answer_number == "q":
-            break
+    if args.cardinals is True:
+        if args.minimal is True and args.maximal is True:
+            guess_cardinal_num(min=args.minimal, max=args.maximal)
+        else:
+            guess_cardinal_num()
+    else:
+        print("dupa")
 
 
 if __name__ == '__main__':
-    guess_cardinal_num()
+    main()
